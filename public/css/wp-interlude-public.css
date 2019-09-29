@@ -1,0 +1,18 @@
+
+.wpi-Waiting {
+    pointer-events: none;
+    display: none;
+}
+
+.wpi-Waiting-message {
+    font-size: 1em;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 1em;
+    background-color: white;
+    color: black;
+    pointer-events: none;
+}

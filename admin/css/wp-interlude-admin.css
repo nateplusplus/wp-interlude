@@ -1,0 +1,39 @@
+/* WP Interlude admin styling */
+.Interlude-Admin {
+    font-size: 1rem;
+}
+
+.Interlude-Admin h2 {
+    border-bottom: 8px solid #CCC;
+    padding: 1em 0;
+}
+
+.Interlude-Form {
+    max-width: 800px;
+}
+
+.Interlude-Form label,
+.Interlude-Form input,
+.Interlude-Form textarea {
+    display: block;
+}
+
+.Interlude-Form label {
+    font-size: .8em;
+    margin-top: .7em;
+    margin-bottom: .3em;
+}
+
+.Interlude-Form textarea {
+    width: 300px;
+}
+.Interlude-Form #selector {
+    width: 300px;
+}
+
+.Interlude-Form-helpText {
+    font-size: .6em;
+    color: #777;
+    margin-top: .3em;
+    margin-bottom: .5em;
+}
