@@ -59,7 +59,6 @@ Interlude.prototype.init = function() {
  */
 Interlude.prototype.getResourceURL = function( target ) {
     var url;
-    console.log( target );
     
     // Links will use href attribute
     if ( typeof target.attr('href') !== 'undefined' && target.attr('href') !== '' ) {
@@ -187,11 +186,10 @@ Interlude.prototype.isResourceAvailable = function( target ) {
     fetch( target.resource )
         .then( function( response ) {
             if ( response.status === 200 ) {
-                console.log( target.resource + ' is available! :)' );
                 this.targets[ target.id ].isReady = true;
             }
             else {
-                console.error( target.resource + ' is not available :(' );
+                console.error( target.resource + ' is not available.' );
             }
         }.bind( this ) )
         .catch( function( error ) {

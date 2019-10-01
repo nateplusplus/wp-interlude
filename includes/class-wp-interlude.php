@@ -69,7 +69,7 @@ class WP_Interlude {
 		if ( defined( 'WP_INTERLUDE_VERSION' ) ) {
 			$this->version = WP_INTERLUDE_VERSION;
 		} else {
-			$this->version = '1.0.0';
+			$this->version = '1.1.0';
 		}
 		$this->plugin_name = 'wp-interlude';
 
