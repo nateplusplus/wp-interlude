@@ -43,9 +43,24 @@ Interlude.prototype.init = function() {
         this.getTargets();
         this.runIntervalCheck();
         this.setIntervalCheck();
+        this.isInitialized();
     }
 }
 
+/**
+ * Interlude - Is Initialized
+ * 
+ * All initial methods have been called and Interlude is running.
+ * 
+ * @since 1.1.0
+ * 
+ * @return void
+ */
+Interlude.prototype.isInitialized = function() {
+    // Remove inline CSS for initial loading state
+    var inlineStyle = document.getElementById( 'wp-interlude-inline-css' );
+    inlineStyle.remove();
+}
 
 /**
  * Interlude - Get Resource URL
@@ -55,7 +70,7 @@ Interlude.prototype.init = function() {
  * @since 1.0.0
  * 
  * @param object target
- * @return void
+ * @return string - URL
  */
 Interlude.prototype.getResourceURL = function( target ) {
     var url;

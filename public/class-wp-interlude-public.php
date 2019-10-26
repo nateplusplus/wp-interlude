@@ -63,6 +63,10 @@ class WP_Interlude_Public {
 
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/wp-interlude-public.css', array(), $this->version, 'all' );
 
+		$inline_style = sprintf( '%s{ display: none; }', stripslashes( get_option( 'wpi_selector' ) ) );
+
+		wp_add_inline_style( $this->plugin_name, $inline_style );
+
 	}
 
 	/**
