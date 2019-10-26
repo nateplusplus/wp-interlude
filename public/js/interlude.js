@@ -9,7 +9,7 @@
  * Meanwhile, checks resource to see if it's available.
  * When the resource is available, the waiting message is removed.
  * 
- * @version 1.0.0
+ * @version 1.2.0
  * 
  * @param object options 
  */
@@ -52,7 +52,7 @@ Interlude.prototype.init = function() {
  * 
  * All initial methods have been called and Interlude is running.
  * 
- * @since 1.1.0
+ * @since 1.2.0
  * 
  * @return void
  */

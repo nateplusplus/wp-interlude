@@ -12,7 +12,7 @@
  * Plugin Name:       WP Interlude
  * Plugin URI:        https://natehub.net
  * Description:       A simple plugin which shows a waiting message until a resource is available for download.
- * Version:           1.0.0
+ * Version:           1.2.0
  * Author:            Nathan Blair
  * Author URI:        https://natehub.net
  * License:           GPL-2.0+
@@ -30,7 +30,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
  */
-define( 'WP_INTERLUDE_VERSION', '1.0.0' );
+define( 'WP_INTERLUDE_VERSION', '1.2.0' );
 
 /**
  * The code that runs during plugin activation.
