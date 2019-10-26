@@ -83,7 +83,7 @@ class WP_Interlude_Public {
 			selector : '" . get_option( 'wpi_selector' ) . "',
 			intervalFrequency : " . get_option( 'wpi_interval_frequency' ) . ",
 			intervalLimit : " . get_option( 'wpi_interval_limit' ) . ",
-			waitingMessage : '" . get_option( 'wpi_waiting_message' ) . "',
+			waitingMessage : `" . preg_replace( '/\n/', '', get_option( 'wpi_waiting_message' ) ) . "`,
 		}";
 		wp_add_inline_script( 'interlude', $data );
 	}

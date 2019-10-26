@@ -16,7 +16,15 @@ function wp_interlude_settings_page() {
     if ( ! current_user_can( 'manage_options' ) ) {
         wp_die( 'Unauthorized user' );
     }
- 
+
+    $wp_editor_settings = array(
+        'textarea_rows' => 8,
+        'tinymce'       => array(
+            'toolbar1'  => 'formatselect,bold,italic,underline,bullist,numlist,alignleft,aligncenter,alignright,alignjustify,link,unlink,forecolor,removeformat,undo,redo',
+            'toolbar2'  => '',
+        ),
+    );
+
     if ( ! empty( $_POST ) && check_admin_referer( 'wp_interlude_nonce' ) ) {
         // Save new values
         update_option( 'wpi_selector', $_POST[ 'wpi_selector' ] );
@@ -55,7 +63,10 @@ function wp_interlude_settings_page() {
             <fieldset>
                 <h3><?php echo __( 'Frontend', 'wp-interlude' ); ?></h3>
                 <label for="waiting_message"><?php echo __( 'Waiting Message', 'wp-interlude' ); ?></label>
-                <textarea id="waiting_message" name="wpi_waiting_message" rows="2"><?php echo esc_attr( get_option( 'wpi_waiting_message' ) ); ?></textarea>
+                <div class="Interlude-Form-helpText">
+                    <?php echo __('This message will appear while your asset is loading.', 'wp-interlude'); ?>
+                </div>
+                <?php wp_editor( stripslashes( get_option( 'wpi_waiting_message' ) ), 'wpi_waiting_message', $wp_editor_settings ); ?>
             </fieldset>
             <hr />
             <fieldset>

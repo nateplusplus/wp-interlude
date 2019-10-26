@@ -226,7 +226,7 @@ Interlude.prototype.renderWaitingMessage = function( target ) {
     var element = jQuery( target.element );
     if ( ! element.hasClass( this.waitingClass ) ) {
         element.addClass( this.waitingClass );
-        jQuery( '<span class="wpi-Waiting-message"><b>' + this.waitingMessage + '</b></span> ' ).insertAfter( element );
+        jQuery( '<span class="wpi-Waiting-message">' + this.waitingMessage + '</span> ' ).insertAfter( element );
         element.prop( 'disabled', true );
     }
 }
