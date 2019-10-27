@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Add plugin settings link to Admin menu.
+ *
+ * @since    1.0.0
+ *
+ * @return   void
+**/
 function wp_interlude_menu() {
     add_options_page(
         'WP Interlude Settings',
@@ -12,15 +19,41 @@ function wp_interlude_menu() {
 add_action('admin_menu', 'wp_interlude_menu');
 
 
+/**
+ * Build the UI for the settings page.
+ *
+ * @since    1.0.0
+ *
+ * @return   void
+**/
 function wp_interlude_settings_page() {
     if ( ! current_user_can( 'manage_options' ) ) {
-        wp_die( 'Unauthorized user' );
+        wp_die( __( 'Unauthorized user', 'wp-interlude' ) );
     }
+
+    $tinymce_toolbar1 = array(
+        'formatselect',
+        'bold',
+        'italic',
+        'underline',
+        'bullist',
+        'numlist',
+        'alignleft',
+        'aligncenter',
+        'alignright',
+        'alignjustify',
+        'link',
+        'unlink',
+        'forecolor',
+        'removeformat',
+        'undo',
+        'redo',
+    );
 
     $wp_editor_settings = array(
         'textarea_rows' => 8,
         'tinymce'       => array(
-            'toolbar1'  => 'formatselect,bold,italic,underline,bullist,numlist,alignleft,aligncenter,alignright,alignjustify,link,unlink,forecolor,removeformat,undo,redo',
+            'toolbar1'  => implode( ',', $tinymce_toolbar1 ),
             'toolbar2'  => '',
         ),
     );
@@ -34,37 +67,39 @@ function wp_interlude_settings_page() {
     }
     ?>
     <div class="Interlude-Admin">
-        <h2><?php echo __( 'WP Interlude Settings', 'wp-interlude' ); ?></h2>
+        <h2><?php _e( 'WP Interlude Settings', 'wp-interlude' ); ?></h2>
         <form class="Interlude-Form" method="post">
             <fieldset>
-                <h3><?php echo __( 'API', 'wp-interlude' ); ?></h3>
-                <label for="selector"><?php echo __( 'Selector', 'wp-interlude' ); ?></label>
+                <h3><?php _e( 'API', 'wp-interlude' ); ?></h3>
+                <label for="selector"><?php _e( 'Selector', 'wp-interlude' ); ?></label>
                 <input id="selector" name="wpi_selector" type="text" value="<?php echo stripslashes( esc_attr( get_option( 'wpi_selector' ) ) ); ?>" >
                 <div class="Interlude-Form-helpText">
-                    <?php echo __('The classname or ID of elements containing resources that need to be tested. Example: "[href^="https://s3-"]" targets any S3 resources.', 'wp-interlude') . "<br />"; ?>
-                    <?php echo __('Read more about JQuery selectors here: ', 'wp-interlude') . '<a href="https://api.jquery.com/category/selectors/" target="_blank">https://api.jquery.com/category/selectors/</a>'; ?>
+                    <?php _e('The classname or ID of elements containing resources that need to be tested. Example: "[href^="https://s3-"]" targets any S3 resources.', 'wp-interlude'); ?>
+                    <br />
+                    <?php _e('Read more about JQuery selectors here: ', 'wp-interlude'); ?>
+                    <a href="https://api.jquery.com/category/selectors/" target="_blank">https://api.jquery.com/category/selectors/</a>
                 </div>
             </fieldset>
             <hr />
             <fieldset>
-                <h3><?php echo __( 'Interval Settings', 'wp-interlude' ); ?></h3>
-                <label for="interval_frequency"><?php echo __( 'Frequency (seconds)', 'wp-interlude' ); ?></label>
+                <h3><?php _e( 'Interval Settings', 'wp-interlude' ); ?></h3>
+                <label for="interval_frequency"><?php _e( 'Frequency (seconds)', 'wp-interlude' ); ?></label>
                 <input id="interval_frequency" name="wpi_interval_frequency" type="number" value="<?php echo esc_attr( get_option( 'wpi_interval_frequency' ) ); ?>">
                 <div class="Interlude-Form-helpText">
-                    <?php echo __('How often (in seconds) the API will try fetching a resource. ( Default 5 seconds )', 'wp-interlude'); ?>
+                    <?php _e('How often (in seconds) the API will try fetching a resource. ( Default 5 seconds )', 'wp-interlude'); ?>
                 </div>
-                <label for="interval_limit"><?php echo __( 'Limit', 'wp-interlude' ); ?></label>
+                <label for="interval_limit"><?php _e( 'Limit', 'wp-interlude' ); ?></label>
                 <input id="interval_limit" name="wpi_interval_limit" type="number" value="<?php echo esc_attr( get_option( 'wpi_interval_limit' ) ); ?>">
                 <div class="Interlude-Form-helpText">
-                    <?php echo __('The maximum number of times the API will attempt to fetch a resource before timing out. ( Default 240 tries )', 'wp-interlude'); ?>
+                    <?php _e('The maximum number of times the API will attempt to fetch a resource before timing out. ( Default 240 tries )', 'wp-interlude'); ?>
                 </div>
             </fieldset>
             <hr />
             <fieldset>
-                <h3><?php echo __( 'Frontend', 'wp-interlude' ); ?></h3>
-                <label for="waiting_message"><?php echo __( 'Waiting Message', 'wp-interlude' ); ?></label>
+                <h3><?php _e( 'Frontend', 'wp-interlude' ); ?></h3>
+                <label for="waiting_message"><?php _e( 'Waiting Message', 'wp-interlude' ); ?></label>
                 <div class="Interlude-Form-helpText">
-                    <?php echo __('This message will appear while your asset is loading.', 'wp-interlude'); ?>
+                    <?php _e('This message will appear while your asset is loading.', 'wp-interlude'); ?>
                 </div>
                 <?php wp_editor( stripslashes( get_option( 'wpi_waiting_message' ) ), 'wpi_waiting_message', $wp_editor_settings ); ?>
             </fieldset>

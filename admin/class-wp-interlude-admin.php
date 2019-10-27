@@ -52,7 +52,7 @@ class WP_Interlude_Admin {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/wp-interlude-options-page.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/wp-interlude-options-page.php';
 	}
 
 	/**
