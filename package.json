@@ -1,0 +1,27 @@
+{
+  "name": "wp-interlude",
+  "version": "1.2.0",
+  "description": "A simple plugin which shows a waiting message until a resource is available for download.",
+  "main": "wp-interlude.php",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nateplusplus/wp-interlude.git"
+  },
+  "keywords": [
+    "WordPress",
+    "plugin"
+  ],
+  "author": "Nathan Blair",
+  "license": "GPL-2.0+",
+  "bugs": {
+    "url": "https://github.com/nateplusplus/wp-interlude/issues"
+  },
+  "homepage": "https://github.com/nateplusplus/wp-interlude#readme",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2"
+  }
+}
