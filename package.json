@@ -22,6 +22,8 @@
   "homepage": "https://github.com/nateplusplus/wp-interlude#readme",
   "devDependencies": {
     "chai": "^4.2.0",
-    "mocha": "^6.2.2"
+    "jsdom": "^15.2.0",
+    "mocha": "^6.2.2",
+    "sinon": "^7.5.0"
   }
 }

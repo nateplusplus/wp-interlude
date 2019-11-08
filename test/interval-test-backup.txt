@@ -1,0 +1,93 @@
+const expect = require( 'chai' ).expect;
+const jsdom = require( 'jsdom' );
+
+
+beforeEach( function () {
+    const { JSDOM } = jsdom;
+    const newDom = new JSDOM(``);
+    window = newDom.window;
+
+    // Stub interval data
+    interval = {
+        count   : 0,
+        seconds : 1,
+        limit   : 2,
+        active  : 1,
+        setCount : ( interval ) => interval.count += 1,
+    };
+
+    // Stub resources data
+    resources = {
+        targets : [
+            {
+                isLoaded : false
+            },
+            {
+                isLoaded : false
+            }
+        ],
+        pending     : 2,
+        isAvailable : ( target ) => false
+    };
+
+    render = {
+        waiting : () => {}
+    }
+
+} );
+
+describe( 'setIntervalCheck', function() {
+
+    var setIntervalCheck = require( '../public/js/interlude.js' ).setIntervalCheck;
+
+    it( 'should set an interval in milliseconds based on input value', function() {
+        // Stub runIntervalCheck function
+        var runIntervalCheck = ( interval ) => true;
+        // Run tests
+        var intervalDetails = setIntervalCheck( interval, runIntervalCheck );
+
+        expect( intervalDetails.delay ).to.equal( interval.seconds * 1000 );
+        window.clearInterval( intervalDetails.id );
+    } );
+    it( 'should maintain interval while resources are still pending', function() {
+        // Stub runIntervalCheck function
+        var runIntervalCheck = ( interval ) => true;
+        // Run tests
+        var intervalDetails = setIntervalCheck( interval, runIntervalCheck );
+        expect( interval.active ).to.equal( 1 );
+        window.clearInterval( intervalDetails.id );
+    } );
+    it( 'should remove interval when no resources are pending', function( done ) {
+        // Stub runIntervalCheck function
+        var runIntervalCheck = ( interval ) => false;
+        // Run tests
+        var intervalDetails = setIntervalCheck( interval, runIntervalCheck, ( interval ) => {
+            expect( interval.active ).to.equal( 0 );
+            done();
+            window.clearInterval( intervalDetails.id );
+        } );
+    } );
+} );
+
+
+describe( 'runIntervalCheck', function() {
+
+    const runIntervalCheck = require( '../public/js/interlude.js' ).runIntervalCheck;
+
+    it( 'should increase the interval count by one', function() {
+        runIntervalCheck( interval, resources, render );
+        expect( interval.count ).to.equal( 1 );
+    } );
+    it( 'should maintain pending resources count if resource is unavailable', function() {
+        var prevPending = resources.pending;
+        resources.isAvailable = ( target ) => false;
+        runIntervalCheck( interval, resources, render );
+        expect( resources.pending ).to.equal( prevPending );
+    } );
+    it( 'should decrease pending resources count if resource is available', function() {
+        var prevPending = resources.pending;
+        resources.isAvailable = ( target ) => true;
+        runIntervalCheck( interval, resources, render );
+        expect( resources.pending ).to.equal( 0 );
+    } );
+} );
