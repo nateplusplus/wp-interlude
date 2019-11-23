@@ -14,70 +14,89 @@
  * @param object options 
  */
 function Interlude( options ) {
+    var self = this;
+
     // Settings
     this.selector = options.selector || '';
     this.waitingMessage = options.waitingMessage || 'Please wait';
-    this.waitingClass = options.waitingClass || 'wpi-Waiting';
 
     // Data
     this.version = '2.0.0';
-}
-
-
-var interval = {
-    getMs : function( seconds ) {
-        if ( ! isNaN( seconds ) ) {
-            return seconds * 1000;
-        } else {
-            console.error( new Error( '"Seconds" value is not a number.' ) );
-        }
-    },
-    intervalShouldRun : function( resources ) {
-        if ( resources ) {
-            if ( resources.hasOwnProperty( 'pending' ) ) {
-                if ( ! isNaN( resources.pending ) ) {
-                    return resources.pending > 0;
+    this.resources = {
+        pending : 0
+    }
+    this.interval = {
+        seconds : options.intervalSeconds || 0,
+        limit   : options.intervalLimit || 0,
+        count   : 0,
+        getMs   : function() {
+            if ( ! isNaN( this.seconds ) ) {
+                return this.seconds * 1000;
+            } else {
+                console.error( new Error( '"Seconds" value is not a number.' ) );
+            }
+        },
+        intervalShouldRun : function() {
+            if ( self.resources ) {
+                if ( self.resources.hasOwnProperty( 'pending' ) ) {
+                    if ( ! isNaN( self.resources.pending ) ) {
+                        return self.resources.pending > 0;
+                    } else {
+                        console.error( new Error( '"Pending" value is not a number.' ) );
+                    }
                 } else {
-                    console.error( new Error( '"Pending" value is not a number.' ) );
+                    console.error( new Error( '"Pending" property does not exist.' ) );
                 }
             } else {
-                console.error( new Error( '"Pending" property does not exist.' ) );
-            }
-        } else {
-            console.error( new Error( 'resources object not provided.' ) );
-        }
-    }
-}
-
-var resources = {
-    getTargets : function( elements ) {
-        var targets = [];
-        if ( elements ) {
-            for ( var i = 0; i < elements.length; i++ ) {
-                var target = {
-                    key      : i,
-                    element  : elements[i],
-                    status   : 0,
-                };
-                targets.push( target );
+                console.error( new Error( 'resources object not provided.' ) );
             }
         }
-        return targets;
-    },
-    hasPending : function( targets ) {
-        var pendingTargets = targets.map( function( target ) {
-            if ( target.pending === 0 ) {
-                return target.key;
+    };
+    this.resources = {
+        targets : [],
+        getTargets : function() {
+            var elements = document.querySelectorAll( self.selector );
+            var targets = [];
+            if ( elements ) {
+                for ( var i = 0; i < elements.length; i++ ) {
+                    var target = {
+                        key      : i,
+                        element  : elements[i],
+                        status   : 0,
+                    };
+                    targets.push( target );
+                }
             }
-        } );
+            return targets;
+        },
+        hasPending : function() {
+            var pendingTargets = this.targets.map( function( target ) {
+                if ( target.pending === 0 ) {
+                    return target.key;
+                }
+            } );
+            return ( pendingTargets.length > 0 );
+        }
+    };
+    this.render = {
+        waitingClass : function() {
+            var targets = self.resources.getTargets();
+            for ( var i = 0; i < targets.length; i++ ) {
+                var element = targets[ i ].element;
+                if ( ! element.classList.contains( 'wpi-Waiting' ) ) {
+                    element.classList.add( 'wpi-Waiting' );
+                }
+            }
+        },
+        waitingMessage  : function() {
+            return '<span class="wpi-Waiting-message">' + this.waitingMessage + '</span>';
+        }
+    };
 
-        return ( pendingTargets.length > 0 );
-    }
 }
 
 
 // Export functions for testing
 if ( typeof module !== 'undefined' && typeof module.exports !== 'undefined' ) {
-    module.exports.interval = interval;
-    module.exports.resources = resources;
+    module.exports.interlude = Interlude;
 }
